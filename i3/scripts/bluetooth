@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#  
+OFF="\uf294"
+#  
+ON="\uf293"
+
+STATUS=$(bluetoothctl show | awk '$1 == "Powered:" { print $2 }')
+
+# Left click
+if [[ "${BLOCK_BUTTON}" -eq 1 ]]
+    then
+    if [[ "${STATUS}" == 'yes' ]]
+        then
+            bluetoothctl power off
+        else 
+            bluetoothctl power on
+    fi
+fi
+
+case "${STATUS}" in
+    "yes") 
+        echo -e "$ON"
+        echo -e "$ON"
+        echo "" ;;
+    "no")
+        echo -e "$OFF"
+        echo -e "$OFF"
+        echo "" ;;
+esac
